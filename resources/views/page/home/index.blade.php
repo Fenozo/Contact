@@ -4,7 +4,7 @@
     
 
     <div class="title m-b-md">
-        <h1>URL shortener</h1>
+        <h1>Url shortener</h1>
         <form method="post" action="{{ route('url_store') }}">
 
             {{ csrf_field() }}

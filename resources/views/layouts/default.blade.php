@@ -4,15 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{ config('app.name') }}</title>
+        <meta name="author" content="FreeHTML5.co" />
+
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet"> -->
 
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
+                background-color: #ccc;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
@@ -28,6 +30,7 @@
                 align-items: center;
                 display: flex;
                 justify-content: center;
+                margin-top: -50px;
             }
 
             /*.position-ref {
@@ -42,13 +45,17 @@
 
             .content {
                 text-align: center;
-                width: 45%;
+                width: 61%;
             }
 
             .title h1{
-                font-size: 84px;
+                font-size: 55px;
                 margin-bottom: 10px;
+                color: #fff;
+                color: #251d1d;
+                text-shadow: 5px 0px 3px #636b6f;
             }
+
 
             .links > a {
                 color: #636b6f;
@@ -60,6 +67,11 @@
                 text-transform: uppercase;
             }
 
+            .title a {
+                color: green;
+                font-size: 22px;
+            }
+
             .m-b-md {
                 margin-bottom: 30px;
             }
@@ -68,11 +80,11 @@
                 height: 2em;
                 border:1px solid;
                 border-color:#ccc;
-                background-color:#63a3c3;
-                color:#fff;
-                font-size:22px;
+                background-color:#fff;
+                color:#000;
+                font-size:20px;
                 border-radius:2px;
-                padding:3px 5px;
+                padding:2px 5px;
             }
 
             /*************************/
@@ -85,19 +97,21 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+            {{--
+                @if (Route::has('login'))
+                    <div class="top-right links">
+                        @auth
+                            <a href="{{ url('/home') }}">Home</a>
+                        @else
+                            <a href="{{ route('login') }}">Login</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}">Register</a>
+                            @endif
+                        @endauth
+                    </div>
+                @endif
+            --}}
 
             <div class="content">
                 @yield('content')

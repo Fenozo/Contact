@@ -42,10 +42,10 @@ class UrlsController extends Controller
 
         Validator::make(compact('url'), ['url' => 'required|url'])->validate();
 
-        $urls = Url::where(['url'=> $url])->first();
+        $record = Url::where(['url'=> $url])->first();
 
-        if ($urls) {
-            return view('page.home.result')->with('shortened', $urls->shortened);
+        if ($record) {
+            return view('page.home.result')->with('shortened', $record->shortened);
         }
 
         $get_shortened = \App\Helpers\Shortened::getUniqueShortUrl();
@@ -64,13 +64,9 @@ class UrlsController extends Controller
 
     public function show ($shortened)
     {
-        $url = Url::whereShortened($shortened)->first();
-        
-        if (! $url) 
-        {
-            return redirect('/');
-        } else {
-            return redirect($url->url);
-        }
+        $url = Url::whereShortened($shortened)->firstOrFail();
+
+        return redirect($url->url);
+
     }
 }
