@@ -38,27 +38,12 @@ class UrlsController extends Controller
 
     public function store(Request $request)
     {
-        $url = trim($request->get('url'));
 
-        Validator::make(compact('url'), ['url' => 'required|url'])->validate();
+        $this->validate($request, ['url' => 'required|url']);
 
-        $record = Url::where(['url'=> $url])->first();
+        $record = $this->getRecordUrl($request->get('url'));
 
-        if ($record) {
-            return view('page.home.result')->with('shortened', $record->shortened);
-        }
-
-        $get_shortened = \App\Helpers\Shortened::getUniqueShortUrl();
-
-        $row = Url::create([
-            'url'       => $url,
-            'shortened' => $get_shortened,
-        ]);
-
-        if ($row) {
-            return view('page.home.result')
-            ->withShortened($row->shortened);
-        }
+        return view('page.home.result')->with('shortened', $record->shortened);
 
     }
 
@@ -67,6 +52,24 @@ class UrlsController extends Controller
         $url = Url::whereShortened($shortened)->firstOrFail();
 
         return redirect($url->url);
+
+    }
+
+    private function getRecordUrl($url) {
+
+        $record = Url::whereUrl($url)->first();
+
+        if ($record) {
+            return $record;
+        }
+
+
+        return Url::create([
+            'url'       => $url,
+            'shortened' => \App\Helpers\Shortened::getUniqueShortUrl(),
+        ]);
+
+       
 
     }
 }
