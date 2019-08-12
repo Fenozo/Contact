@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'UrlsController@index');
+
+Route::post('url_shortened', 'UrlsController@store')->name('url_store');
+
+Route::get('/{shortened}','UrlsController@show')->name('shortened');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
