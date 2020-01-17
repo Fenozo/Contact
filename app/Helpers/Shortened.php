@@ -1,6 +1,6 @@
 <?php
 namespace App\Helpers;
-use App\Model\Url;
+use App\Models\Url;
 
 class Shortened {
 

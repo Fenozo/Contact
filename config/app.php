@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Url Loops'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +53,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+
+    'my_url' => str_replace('index.php', '', $_SERVER['SCRIPT_NAME']),
 
     'asset_url' => env('ASSET_URL', null),
 

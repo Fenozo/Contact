@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Model\Url;
+use App\Models\Url;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -30,11 +30,60 @@ class UrlsController extends Controller
     {
         // dd(DB::query('SELECT * FROM urls'));
 
+        $url_list = Url::orderBy('id', 'desc')->paginate(3);
 
-        // http://google.com
-
-        return view('page.home.index');
+        return view('page.home.index', [
+            'url_list' => $url_list
+            ]);
     }
+
+    public function render_show($data) 
+    {
+        return view('page.url.show_details', $data);
+    }
+
+
+    public function show_details($shortened)
+    {   
+        $data = []; $documentations = [];
+
+        if ($shortened) {
+            $data = Url::where(['shortened' => $shortened])->first();
+            $documentations = Url::where([
+                    'shortened' => $shortened
+                ])->first()->documentations;
+           
+        } else 
+            {
+                return redirect()->route('show_url_list');
+            }
+
+            
+        $data = [
+            'data'  => $data,
+            'documentations' => $documentations,
+        ];
+            
+        return $this->render_show($data);
+    }
+
+    public function finder(Request $request) 
+    {
+        $url = $request->get('url');
+
+        $urls = \App\Models\Url::where(
+            [
+                'url' => $url 
+            ])->get();
+
+        $urls =[
+            'urls' => $urls
+        ];
+
+
+        return view('page.url.list', $urls);
+    }
+
 
     public function store(Request $request)
     {
@@ -47,7 +96,25 @@ class UrlsController extends Controller
 
     }
 
-    public function show ($shortened)
+    public function showUrlList(Request $request)
+    {
+      
+        $url = $request->input('url', null);
+        if ($url === null) {
+            $url = '';
+        }
+
+        $url_list = Url::where('url', 'like', '%'.$url.'%')
+                        ->orderBy('id', 'desc')
+                        ->paginate(3);
+
+        return view('page.url.showOrcreate' ,[
+            'url_list'  => $url_list,
+            'finding'   => $url,
+        ]);
+    }
+
+    public function show_with_shortened ($shortened)
     {
         $url = Url::whereShortened($shortened)->firstOrFail();
 
@@ -55,21 +122,25 @@ class UrlsController extends Controller
 
     }
 
+    public function show_with_url($url)
+    {
+        $url = Url::whereUrl($url)->firstOrFail();
+
+        return redirect($url->url);
+    }
+
     private function getRecordUrl($url) {
 
-        $record = Url::whereUrl($url)->first();
+        return Url::firstOrCreate(
+            ['url'       => $url ], 
+            [
+                'shortened' => \App\Helpers\Shortened::getUniqueShortUrl()
+            ]);
 
-        if ($record) {
-            return $record;
-        }
+    }
 
-
-        return Url::create([
-            'url'       => $url,
-            'shortened' => \App\Helpers\Shortened::getUniqueShortUrl(),
-        ]);
-
-       
-
+    public function show()
+    {
+        
     }
 }

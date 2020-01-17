@@ -3,16 +3,53 @@
 @section('content')
     
 
-    <div class="title m-b-md">
-        <h1>Url shortener</h1>
-        <form method="post" action="{{ route('url_store') }}">
+    <div class="container">
+        <h1>{{ config('specific.app_name') }}</h1>
+        <form method="get" action="{{ route('show_url_list') }}">
 
-            {{ csrf_field() }}
+           {{-- {{ csrf_field() }}  --}}
 
-            <input name="url" class="input form-control" value="{{ old('url') }}"></input>
+            <input name="url" class="input form-control" value="{{ old('url') }}" placeholder="Please enter your original url here"></input>
             {!! $errors->first('url', '<p class="error-msg">:message</p>') !!}
         </form>
     </div>
+    <div class="">
+        
+            <div class="container content">
+                <div class="row">
+                    @foreach($url_list as $url)
+                        <div class="col-md-9">
+                            <article>
+                                <h1>{{ $url->title }}</h1>
+                                <div>
+                                    <p>
+                                        <a href="{{ $url->url }}"> {{ $url->url }} </a> 
+                                    </p>
+                                </div>
+                                <div>
+                                    <em>{{ $url->getCreatedAt()->fromNow() }}</em>
+                                </div>
+                                <div class="style-date">
+                                    <em>{{ $url->getCreatedAt()->calendar() }}</em>
+                                </div>
+                                <div class="edit">
+                                    <a href="{{ route('edit_url', ['id'=> $url->id]) }}" style="color:#5bc0de;">editer</a>
 
+                                    <div class="show">
+                                        <a href="{{ route('show_details', ['id'=> $url->shortened]) }}" style="">show</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="container paginations">
+                <div class="row">
+
+                    {{ $url_list->links() }}
+                </div>
+            </div>
+    </div>
 @stop
 

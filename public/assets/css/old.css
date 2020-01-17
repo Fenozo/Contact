@@ -1,0 +1,196 @@
+html, body {
+    background-color: #ccc;
+    color: #636b6f;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    height: 100vh;
+    margin: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: -50px;
+}
+
+/*.position-ref {
+    position: relative;
+}*/
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+    width: 61%;
+}
+
+.title h1{
+    font-size: 55px;
+    margin-bottom: 10px;
+    color: #fff;
+    color: #251d1d;
+    text-shadow: 5px 0px 3px #636b6f;
+}
+
+
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.title a {
+    color: green;
+    font-size: 22px;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+.input {
+    width: 100%;
+    height: 2em;
+    border:1px solid;
+    border-color:#ccc;
+    background-color:#fff;
+    color:#000;
+    font-size:20px;
+    border-radius:2px;
+    padding:2px 5px;
+}
+
+/*************************/
+
+.error-msg {
+    color: #f16815;
+    font-weight: 900;
+}
+
+article {
+    box-shadow: 0px 7px 9px 0px #676363;
+    padding: 12px;
+    margin-top: 20px;
+}
+
+article h2, 
+article a {
+    text-align: left;
+}
+
+article .href{
+    position:relative;
+    border: 2px solid;
+    height: 35px;
+}
+
+.m-b-md  article .href a {
+    color: green;
+    font-size: 22px;
+    position:absolute;
+    left: 7px;
+    bottom:7px;
+}
+
+/**
+* FORMULAIRE DE CONTACT IHM Interface Homme Machine
+*/
+.form-group , .form-control{
+    margin-top: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 26px;
+    text-align: end;
+}
+
+.form-group .form-control {
+    margin-top: 12px;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: monospace;
+    width: 96%;
+}
+
+.form-control {
+    /* width: 100%; */
+    height: 35px;
+    padding:0 12px;
+    background-color:#fefefe;
+}
+
+.form-control {
+    border-inline-color: #ccc;
+    border:none;
+    padding: 3px 12px;
+    padding-bottom: 5px;
+    width: 95%;
+}
+
+.form-control:focus {
+    border:1xp solid sandybrown;
+}
+
+.m-b-md form {
+    box-shadow: 2px 3px 9px -5px #251d1d;
+    padding:12px;
+}
+
+.btn {
+    border: none;
+    padding: 9px 12px;
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: 600;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.btn-save {
+    background-color: #556caf;
+    color:#fefefe;
+}
+
+/**
+* LINK HREF IHM Interface Homme Machine
+*/
+a {
+    color: #551a8b;
+}
+a:hover {
+    color: hsl(295, 67%, 35%);
+}
+/**
+* CONTAINER IHM Interface Homme Machine
+*/
+
+.container {
+    display: block;
+    position: fixed;
+    top: -2px;
+    width: 61%;
+    z-index: 12;
+    background: #cccccc;
+}
+.container.content {
+    position: relative;
+    overflow: auto;
+    /* top: 720px; */
+    z-index: 0;
+    width: 100%;
+}
+
