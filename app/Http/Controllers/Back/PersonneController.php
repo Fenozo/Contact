@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Back;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Personne;
@@ -32,23 +33,48 @@ class PersonneController extends Controller
 
     public function ajax_index( Request $request)
     {
-        $personnes = Personne::all();
-        if ($request->input('find_by_name', null) != null) {
-            $personnes = Personne::where('name' , 'like', "%".$request->input('find_by_name')."%")
-                        ->get();
-        }
-        // dump($personnes);
+        $data_limit = 3;
 
-        array_walk($personnes, function(&$datas, $key) {
-            if (is_array($datas)) {
-                array_walk($datas, function($item, $key) {
-                    $item->url_by_personne = route('add_contact', ['personne'=> $item->id]);
-                    $item->url_by_id = route('back_personne_show', ['id' => $item->id]);
+        $datas= [];
+        $personnes = Personne::paginate($data_limit);
+        $datas = $personnes;
+        $find_by_name = $request->input('find_by_name', null);
+
+
+        if ( $find_by_name != null) {
+                $name = Personne::where('name' , 'like', "%".$find_by_name ."%")
+                    ->paginate($data_limit);
+                if ($name) {
+                    $datas = $name ;
+                    
+                }
+            array_walk($datas, function(&$item, $key) {
+                if (is_array($item)) {
+                    array_walk($item, function(&$item, $key) {
+                        // dump($item);
+                    });
+                }
+            });
+        }
+
+        array_walk($datas, function(&$item, $key) {
+
+            if($item instanceof Collection) {
+                array_walk($item, function(&$item, $key) {
+                    if (is_array($item)) {
+
+                        array_walk($item, function(&$item, $key) {
+                            $item->url_by_personne = route('add_contact', ['personne'=> $item->id]);
+                            $item->url_by_id = route('back_personne_show', ['id' => $item->id]);
+                            $item->juste_un_test = 'Bonjour';
+                        });
+                    }
                 });
             }
         });
+        
 
-        return new Response(json_encode($personnes));
+        return new Response($datas->toJson());
     }
 
     /**

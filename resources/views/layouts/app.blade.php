@@ -16,6 +16,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/back/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/back/css/contact.css') }}">
 </head>
 <body>

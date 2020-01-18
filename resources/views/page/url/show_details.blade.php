@@ -5,7 +5,7 @@
 <div class="container content">
 
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-4">
 			<div class="actions">
 	        	
 	        	<a style="margin-left: 22px;" href="{{ route('show_url_list') }}">
@@ -23,10 +23,14 @@
 			<p >
 			{{ $data->shortened }}
 			</p>
+
 			<p><a href="{{ $data->url }}">{{ $data->url }} </a></p>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-8">
 			<h1> <a href="{{ $data->url }}">{{ $data->url }}</a> </h1>
+			<p style="font-size:18px;">
+				{{ $data->description }}
+			</p>
 			@foreach( $documentations as $doc)
 				<div class="" style="border:2px solid; padding:5px;">
 					@if ($doc->title == null)
